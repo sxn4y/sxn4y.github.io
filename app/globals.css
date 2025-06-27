@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --accent-1: #0062ff;
+  --accent-2: #9000ff;
+  --accent-3: #ff0000;
+  --accent-4: #ff6f00;
 }
 
 @theme inline {
@@ -14,8 +18,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0f0617;
     --foreground: #ededed;
+    --accent-1: #0062ff;
+    --accent-2: #9000ff;
+    --accent-3: #ff0000;
+    --accent-4: #ff6f00;
   }
 }
 
@@ -25,4 +33,12 @@ body {
   background-image: radial-gradient(25% 47% at 14% 13%, #FF00B36B 1%, #073AFF00 100%),radial-gradient(30% 30% at 5% 74%, #FF003A4D 1%, #073AFF00 100%),radial-gradient(50% 50% at 36% 76%, #FF5D1E70 0%, #073AFF00 100%),radial-gradient(50% 50% at 72% 23%, #B800FF45 1%, #073AFF00 100%),radial-gradient(35% 56% at 91% 74%, #8A4FFF7D 9%, #073AFF00 100%),radial-gradient(74% 86% at 67% 38%, #FF5D1EA6 18%, #073AFF00 100%); */
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.gr-1 {
+  background-image: radial-gradient(20rem at 30% 30%, #0062ff88 0, #0000 100%),
+    radial-gradient(15rem at 45% 45%, #9000ff88 0, #0000 100%),
+    radial-gradient(10rem at 55% 55%, #ff000088 0, #0000 100%),
+    radial-gradient(6rem at 60% 60%, #ff6f0088 0, #0000 100%);
+  background-size: 100% 100%;
 }
