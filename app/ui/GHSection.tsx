@@ -1,7 +1,7 @@
 "use client";
 
 import { repoList } from "@/lib/repoList";
-import { GoLaw } from "react-icons/go";
+import { GoLaw, GoStar } from "react-icons/go";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import BSect from "@/components/ui/bsect";
@@ -65,7 +65,7 @@ const GHSection = () => {
         >
           {repoList.map((rList) => (
             <div
-              className="h-[20vh] min-w-[20vw] flex items-center grow-1 my-2"
+              className="min-h-[20vh] min-w-[20vw] flex items-center grow-1 m-2"
               key={rList.name}
             >
               <Card className="flex w-full h-full border-1 border-(--foreground)/20 bg-(--foreground)/2 text-(--foreground) shadow-md">
@@ -73,7 +73,7 @@ const GHSection = () => {
                   <CardTitle>{rList.name}</CardTitle>
                   <CardDescription>{rList.description}</CardDescription>
                 </CardHeader>
-                <CardContent className="grow-100"></CardContent>
+                <CardContent className="grow-100 flex-row"></CardContent>
                 <CardFooter className="flex-col gap-2">
                   <Button
                     variant="outline"

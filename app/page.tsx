@@ -51,7 +51,7 @@ export default function Home() {
           noiseIntensity={3}
           rotation={2}
         /> */}
-          <div className="absolute xl:text-[3.5vw] md:text-[6vw] text-[12vw] text-center">
+          <div className="absolute xl:text-[3.5vw] md:text-[6vw] text-[10vw] text-center p-10">
             THIS IS A WORK IN PROGRESS! 👋
           </div>
         </BSect>
