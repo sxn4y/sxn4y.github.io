@@ -65,7 +65,7 @@ const GHSection = () => {
         >
           {repoList.map((rList) => (
             <div
-              className="h-[20vh] min-w-[20vw] flex items-center grow-1 mx-2"
+              className="h-[20vh] min-w-[20vw] flex items-center grow-1 my-2"
               key={rList.name}
             >
               <Card className="flex w-full h-full border-1 border-(--foreground)/20 bg-(--foreground)/2 text-(--foreground) shadow-md">
