@@ -5,7 +5,7 @@ import { GoLaw, GoStar } from "react-icons/go";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import BSect from "@/components/ui/bsect";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -15,10 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import BDiv from "@/components/ui/bdiv";
-import ShinyText from "@/components/ui/ShinyText";
 
 import React, { use, useEffect } from "react";
 
@@ -44,7 +41,7 @@ const GHSection = () => {
           className="flex text-6xl opacity-0 grow-162"
           threshold={0.5}
           direction="hor"
-          distance={400}
+          distance={0}
           reverse={true}
           duration={1.5}
           opacity={0}
@@ -57,7 +54,7 @@ const GHSection = () => {
           className="flex mt-[10vh] flex-wrap min-h-screen lg:flex-row flex-col text-xl opacity-0 grow-200"
           threshold={0.5}
           direction="hor"
-          distance={400}
+          distance={0}
           duration={1.5}
           opacity={0}
           scale={1}
@@ -76,16 +73,13 @@ const GHSection = () => {
                 <CardContent className="grow-100 flex-row"></CardContent>
                 <CardFooter className="flex-col gap-2">
                   <Button
-                    variant="outline"
-                    className="w-full border-(--foreground)/20 hover:bg-(--foreground)/10 hover:border-(--background)"
+                    variant="fancy"
+                    className="w-full"
+                    parallax
+                    tiltFactor={0}
                     onClick={() => window.open(rList.html_url, "_blank")}
                   >
-                    <ShinyText
-                      text="View on GitHub!"
-                      disabled={false}
-                      speed={3}
-                      className=""
-                    />
+                    Github
                   </Button>
                 </CardFooter>
               </Card>

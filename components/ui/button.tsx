@@ -1,59 +1,172 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+"use client";
 
-import { cn } from "@/lib/utils"
+import React, { ReactNode, useEffect } from "react";
+import "./epsilon.css";
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-  {
-    variants: {
-      variant: {
-        default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
-      },
-      size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  }
-)
+export interface ButtonProps {
+  children?: ReactNode;
+  className?: string;
+  parallax?: boolean;
+  tiltFactor?: number;
 
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
+  autoFocus?: boolean;
+  command?: string;
+  commandFor?: string;
+  disabled?: boolean;
+  form?: string;
+  formAction?: string;
+  formEncType?: string;
+  formMethod?: string;
+  formNoValidate?: boolean;
+  formTarget?: string;
+  name?: string;
+  type?: "button" | "submit" | "reset";
+  value?: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onMouseEnter?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onMouseLeave?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLButtonElement>) => void;
 
-  return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  )
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "positive"
+    | "danger"
+    | "link"
+    | "fancy";
 }
 
-export { Button, buttonVariants }
+const Button: React.FC<ButtonProps> = ({
+  children,
+  className = "w-fit h-[100px]",
+  parallax = false,
+  tiltFactor = 20,
+
+  autoFocus = false,
+  disabled = false,
+  form,
+  formAction,
+  formEncType,
+  formMethod,
+  formNoValidate = false,
+  formTarget,
+  name,
+  type = "button",
+  value,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+
+  variant = "primary",
+}) => {
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const isTouchDevice = () => {
+    if (typeof window !== "undefined") {
+      return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    }
+    return false;
+  };
+
+  if (isTouchDevice()) {
+    tiltFactor = 0;
+  }
+
+  let inBuiltClass =
+    "px-3 py-1.5 rounded-(--s2)  text-(--background) bg-(--foreground) outline-(--foreground)/50 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/90 focus:outline-3";
+
+  switch (variant) {
+    case "secondary":
+      inBuiltClass =
+        "px-3 py-1.5 rounded-(--s2) text-(--foreground) bg-(--foreground)/10 outline-(--foreground)/5 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/9 focus:outline-3";
+      break;
+    case "outline":
+      inBuiltClass =
+        "px-3 py-1.5 rounded-(--s2) text-(--foreground) border border-(--foreground)/20 bg-(--foreground)/10 outline-(--foreground)/7 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/9 focus:outline-3";
+      break;
+    case "positive":
+      inBuiltClass =
+        "px-3 py-1.5 rounded-(--s2) text-(--foreground) bg-blue-500 dark:bg-blue-800 outline-blue-500/50 dark:outline-blue-800/50 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-blue-500/90 dark:hover:bg-blue-800/90 focus:outline-3";
+      break;
+    case "danger":
+      inBuiltClass =
+        "px-3 py-1.5 rounded-(--s2) text-(--foreground) bg-red-500 dark:bg-red-800 outline-red-500/50 dark:outline-red-800/50 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-red-500/90 dark:hover:bg-red-800/90 focus:outline-3";
+      break;
+    case "link":
+      inBuiltClass =
+        "px-3 py-1.5 rounded-(--s2) text-(--foreground) outline-0 delay-25 transition-[background] transition-[text-decoration] underline-offset-4 hover:underline hover:shadow-lg/20";
+      break;
+    case "fancy":
+      inBuiltClass =
+        "px-3 py-1.5 rounded-(--s2) text-(--foreground) border border-(--foreground)/20 bg-linear-to-b from-(--foreground)/10 to-(--foreground)/6 outline-(--foreground)/7 outline-0 delay-25 transition-[outline] transition-[background] hover:bg-(--foreground)/2 focus:outline-3";
+      break;
+  }
+
+  useEffect(() => {
+    const button = buttonRef.current;
+    let handleMouseMove = (e: MouseEvent) => {},
+      handleMouseLeave = () => {};
+
+    if (!button) return;
+
+    if (parallax) {
+      handleMouseMove = (e: MouseEvent) => {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const tiltX = (y - centerY) / (button.clientHeight / tiltFactor);
+        const tiltY = (centerX - x) / (button.clientWidth / tiltFactor);
+
+        button.style.setProperty("--x", `${x}%`);
+        button.style.setProperty("--y", `${y}%`);
+        button.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      };
+
+      handleMouseLeave = () => {
+        button.style.transform =
+          "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+      };
+
+      button.addEventListener("mousemove", handleMouseMove);
+
+      button.addEventListener("mouseleave", handleMouseLeave);
+    }
+
+    return () => {
+      button.removeEventListener("mousemove", handleMouseMove);
+      button.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  });
+
+  return (
+    <button
+      autoFocus={autoFocus}
+      disabled={disabled}
+      form={form}
+      formAction={formAction}
+      formEncType={formEncType}
+      formMethod={formMethod}
+      formNoValidate={formNoValidate}
+      formTarget={formTarget}
+      name={name}
+      type={type}
+      value={value}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onFocus={onFocus}
+      className={`${
+        parallax ? "glow-effect" : "no-glow-effect"
+      } ${inBuiltClass} h-fit font-medium text-(length:--s3) overflow-hidden ${className}`}
+      ref={buttonRef}
+    >
+      {children}
+      <div className="glow-container" />
+    </button>
+  );
+};
+
+export default Button;
